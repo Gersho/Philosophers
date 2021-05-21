@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/05/21 17:09:22 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/05/21 17:14:13 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <pthread.h>
 
 typedef struct s_args
 {
@@ -32,6 +33,6 @@ int		ft_atoi(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	error_exit(int err);
 
-void	print_args(t_args *args);
+//void	print_args(t_args *args);
 
 #endif

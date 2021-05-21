@@ -6,11 +6,30 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:05:15 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/05/21 16:32:21 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/05/21 17:29:25 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+
+
+
+
+#include <stdio.h>
+void	print_args(t_args *args)
+{
+	printf("philo_count:%d\n", args->philo_count);
+	printf("time_death:%d\n", args->time_death);
+	printf("time_eat:%d\n", args->time_eat);
+	printf("time_sleep:%d\n", args->time_sleep);
+	printf("meal_count:%d\n", args->meal_count);
+}
+
+
+
+
+
 
 int	main(int ac, char **av)
 {
@@ -26,6 +45,21 @@ int	main(int ac, char **av)
 	print_args(&args);
 	exit(0);
 }
+
+
+
+/*
+	Documentation
+
+	https://www.cs.cmu.edu/afs/cs/academic/class/15492-f07/www/pthreads.html
+	https://randu.org/tutorials/threads/
+	https://man7.org/linux/man-pages/man7/pthreads.7.html
+	https://docs.oracle.com/cd/E19120-01/open.solaris/816-5137/tlib-1/index.html
+
+	http://ccfit.nsu.ru/~fat/pthreads/816-5137.pdf
+
+
+*/
 
 /* 
 philosopher with threads and mutex
