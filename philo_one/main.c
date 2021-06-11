@@ -6,16 +6,11 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:05:15 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/05/21 17:29:25 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 12:50:22 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-
-
-
-
 #include <stdio.h>
 void	print_args(t_args *args)
 {
@@ -26,27 +21,27 @@ void	print_args(t_args *args)
 	printf("meal_count:%d\n", args->meal_count);
 }
 
-
-
-
-
+static int	error_ret(void)
+{
+	write(1, "Error\n", 6);
+	return (-1);
+}
 
 int	main(int ac, char **av)
 {
 	t_args	args;
 
 	if (ac != 5 && ac != 6)
+		return error_ret();
+	args_init(&args);
+	if (args_parse(ac, av, &args) == -1)
 	{
 		write(1, "Error\n", 6);
-		exit(-1);
+		return (-1);
 	}
-	args_init(&args);
-	args_parse(ac, av, &args);
 	print_args(&args);
-	exit(0);
+	return (0);
 }
-
-
 
 /*
 	Documentation
@@ -61,7 +56,7 @@ int	main(int ac, char **av)
 
 */
 
-/* 
+/*
 philosopher with threads and mutex
 
 args:
@@ -99,4 +94,17 @@ args:
 	◦timestamp_in_ms X is thinking
 	◦timestamp_in_ms X died
 
+
+
+
+
+
+
+Any change of status of a philosopher must be written as follows 
+(with X replaced with the philosopher number and timestamp_in_ms the current timestamp in mil-liseconds)
+◦timestamp_in_ms X has taken a fork
+◦timestamp_in_ms X is eating
+◦timestamp_in_ms X is sleeping
+◦timestamp_in_ms X is thinking
+◦timestamp_in_ms X died
 	   */
