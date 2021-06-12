@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:05:15 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/11 12:50:22 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/11 17:34:20 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	error_ret(void)
 int	main(int ac, char **av)
 {
 	t_args	args;
+	pthread_t *philos;
 
 	if (ac != 5 && ac != 6)
 		return error_ret();
@@ -40,6 +41,21 @@ int	main(int ac, char **av)
 		return (-1);
 	}
 	print_args(&args);
+
+	//spawn philos
+	philos = malloc(sizeof(pthread_t) * args.philo_count);
+	if(!philos)
+		return (-1);
+	spawn_socrates(&args, philos);
+
+	gettimeofday(&args.start, NULL);
+	while(1)
+	{
+		//printf("%d\n", get_elapsed_time(&args));
+
+		//get_elapsed_time(&args);
+		usleep(1000);
+	}
 	return (0);
 }
 
@@ -52,8 +68,6 @@ int	main(int ac, char **av)
 	https://docs.oracle.com/cd/E19120-01/open.solaris/816-5137/tlib-1/index.html
 
 	http://ccfit.nsu.ru/~fat/pthreads/816-5137.pdf
-
-
 */
 
 /*
@@ -65,8 +79,6 @@ args:
 		time_to_eat
 		time_to_sleep
 		optional->[number_of_times_each_philosopher_must_eat]
-
-
 
 	memset,
 	printf,
@@ -86,19 +98,11 @@ args:
 	pthread_mutex_lock,
 	pthread_mutex_unlock
 
-
-
 	◦timestamp_in_ms X has taken a fork
 	◦timestamp_in_ms X is eating
 	◦timestamp_in_ms X is sleeping
 	◦timestamp_in_ms X is thinking
 	◦timestamp_in_ms X died
-
-
-
-
-
-
 
 Any change of status of a philosopher must be written as follows 
 (with X replaced with the philosopher number and timestamp_in_ms the current timestamp in mil-liseconds)
