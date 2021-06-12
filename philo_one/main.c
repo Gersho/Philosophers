@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:05:15 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/11 17:34:20 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/12 13:17:15 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 	philos = malloc(sizeof(pthread_t) * args.philo_count);
 	if(!philos)
 		return (-1);
-	spawn_socrates(&args, philos);
+	setup_philos(&args, philos);
 
 	gettimeofday(&args.start, NULL);
 	while(1)

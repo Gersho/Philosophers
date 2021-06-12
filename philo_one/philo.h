@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/11 17:28:37 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/12 13:43:02 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 # include <sys/time.h>
 
 typedef struct timeval t_timeval;
+
+typedef enum	e_state 
+{
+	Eating,
+	Sleeping,
+	Thinking,
+	Dead
+}				t_state;
 
 // typedef struct s_time
 // {
@@ -38,8 +46,12 @@ typedef struct s_args
 
 typedef struct s_philo
 {
-	int		last_meal;
-	int		sleep_start;
+	int			id;
+	int			last_meal;
+	int			sleep_start;
+	int			meal_count;
+	t_state		status;
+	t_args		*args;
 }	t_philo;
 
 
@@ -51,5 +63,5 @@ int		ft_atoi(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		args_check(t_args *args);
 int 	get_elapsed_time(t_args *args);
-int spawn_socrates(t_args *args, pthread_t *philos);
+int		setup_philos(t_args *args, pthread_t *philos);
 #endif
