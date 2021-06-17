@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 14:55:55 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/13 15:41:54 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/15 18:25:25 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	mutex_forks(t_args *args)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(i < args->philo_count)
+	while (i < args->philo_count)
 	{
 		pthread_mutex_init(&args->forks[i], NULL);
 		printf("fork %d init\n", i);
@@ -35,14 +35,15 @@ int	mutex_init(t_args *args)
 
 int	mutex_destroy(t_args *args)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(i < args->philo_count)
+	while (i < args->philo_count)
 	{
 		pthread_mutex_destroy(&args->forks[i]);
 		printf("fork %d destroyed\n", i);
 		i++;
 	}
 	pthread_mutex_destroy(&args->output);
+	return (0);
 }
