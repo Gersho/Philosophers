@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 17:23:09 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/17 12:12:28 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/17 13:12:59 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	philo_output(t_philo *philo)
 		return (0);
 	if (pthread_mutex_lock(&philo->args->output) != 0)
 		return (-1);
+	if (philo->args->all_alive == 0)
+		return (0);
 	printf("%d %d ", get_elapsed_time(philo->args->start), philo->id);
 	if (philo->status == eating)
 		printf("is eating\n");
@@ -48,7 +50,6 @@ int	grab_fork(t_philo *philo, int fork)
 {
 	if (pthread_mutex_lock(&philo->args->forks[fork]) != 0)
 		return (-1);
-	
 	philo->status = taking_fork;
 	philo_output(philo);
 	return (0);
@@ -60,10 +61,11 @@ int	philo_startmeal(t_philo *philo, int now)
 		return (-1);
 	if (grab_fork(philo, philo->fork_r) == -1)
 		return (-1);
+	now = get_elapsed_time(philo->args->start);
 	philo->status = eating;
 	philo_output(philo);
 	philo->last_meal = now;
-	printf("philo %d last meal is %d\n", philo->id, philo->last_meal);
+	//printf("philo %d last meal is %d\n", philo->id, philo->last_meal);
 	return (0);
 }
 
@@ -75,7 +77,7 @@ int	philo_endmeal(t_philo *philo, int now)
 		return (-1);
 	philo->status = sleeping;
 	philo->sleep_start = now;
-	printf("philo %d start sleep is %d\n", philo->id, philo->sleep_start);
+	//printf("philo %d start sleep is %d\n", philo->id, philo->sleep_start);
 	philo_output(philo);
 	return (0);
 }
@@ -149,9 +151,13 @@ int	setup_philos(t_args *args)
 	while (i < args->philo_count)
 	{
 		philo = malloc(sizeof(t_philo));
+
+		//rattacher philo au args
+		args->philo_data[i] = philo;
 		philo->id = i + 1;
 		philo->args = args;
 		pthread_create(&args->philos[i], NULL, philo_birth, philo);
+		usleep(1);
 		i++;
 	}
 	return (0);

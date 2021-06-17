@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:05:15 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/15 18:24:49 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/17 13:15:12 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,35 @@ int	shutdown(t_args *args)
 	free(args->philos);
 	free(args->forks);
 	free(args);
+	free(args->philo_data);
+	return (0);
+}
+
+int main_monitoring(t_args *args)
+{
+	int	now;
+	int	i;
+
+	while (args->all_alive == 1)
+	{
+		i = 0;
+		now = get_elapsed_time(args->start);
+		if (now == -1)
+			return (-1);
+		while (i < args->philo_count)
+		{
+			philo_isalive(args->philo_data[i], now);
+			i++;
+		}
+		usleep(10);
+	}
+	return (0);
 }
 
 int	main(int ac, char **av)
 {
 	t_args	*args;
+	int		i;
 
 	if (ac != 5 && ac != 6)
 		return (error_ret());
@@ -42,14 +66,19 @@ int	main(int ac, char **av)
 		return (error_ret());
 	print_args(args);
 	args->philos = malloc(sizeof(pthread_t) * args->philo_count);
+	args->philo_data = malloc(sizeof(t_philo*) * args->philo_count);
 	args->forks = malloc(sizeof(pthread_mutex_t) * args->philo_count);
 	if (!args->philos || !args->forks)
 		return (-1);
 	gettimeofday(&args->start, NULL);
 	mutex_init(args);
 	setup_philos(args);
-	while (args->all_alive == 1)
-		usleep(10);
+
+	if ( main_monitoring(args) == -1)
+		return (-1);
+
+
+
 	shutdown(args);
 	return (0);
 }

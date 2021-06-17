@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/15 18:30:59 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/17 13:07:42 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 typedef struct timeval	t_timeval;
 
+typedef struct s_args	t_args;
+
 typedef enum e_state
 {
 	eating,
@@ -28,6 +30,18 @@ typedef enum e_state
 	taking_fork,
 	dead
 }				t_state;
+
+typedef struct s_philo
+{
+	int			id;
+	int			last_meal;
+	int			sleep_start;
+	int			meal_count;
+	int			fork_l;
+	int			fork_r;
+	t_state		status;
+	t_args		*args;
+}	t_philo;
 
 typedef struct s_args
 {
@@ -41,19 +55,9 @@ typedef struct s_args
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	output;
 	pthread_t		*philos;
+	t_philo			**philo_data;
 }				t_args;
 
-typedef struct s_philo
-{
-	int			id;
-	int			last_meal;
-	int			sleep_start;
-	int			meal_count;
-	int			fork_l;
-	int			fork_r;
-	t_state		status;
-	t_args		*args;
-}	t_philo;
 
 void	argerror_exit(void);
 void	args_init(t_args *args);
@@ -68,6 +72,7 @@ int		mutex_forks(t_args *args);
 int		mutex_init(t_args *args);
 int		mutex_destroy(t_args *args);
 int		unspawn_philos(t_args *args);
+void	philo_isalive(t_philo *philo, int now);
 // void	print_args(t_args *args); //debug
 // void	philo_debug(t_philo *philo); //debug
 #endif
