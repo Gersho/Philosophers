@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 17:23:09 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/18 16:41:24 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/18 19:02:40 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,8 @@ int	philo_output(t_philo *philo)
 
 void	philo_isalive(t_philo *philo, int now)
 {
-	// if (now == 800 && philo->id == 1)
-	// {
-	// 	printf("");
-		
-	// }
-
 	if (now >= philo->last_meal + philo->args->time_death)
 	{
-	 	//philo_debug(philo);
-		// if (philo->id == 1)
-		// {
-		// 	printf("in philo is alive death philo %d ptr: %p\n",philo->id , philo);
-		// 	philo_debug(philo);
-		// }
 		philo->status = dead;
 		philo_output(philo);
 		philo->args->all_alive = 0;
@@ -69,7 +57,6 @@ int	grab_fork(t_philo *philo, int fork)
 
 int	philo_startmeal(t_philo *philo, int now)
 {
-	//printf("%d %d enter philo_startmeal\n", now, philo->id);
 	if (grab_fork(philo, philo->fork_l) == -1)
 		return (-1);
 	if (grab_fork(philo, philo->fork_r) == -1)
@@ -81,8 +68,6 @@ int	philo_startmeal(t_philo *philo, int now)
 	philo->status = eating;
 	philo_output(philo);
 	philo->last_meal = now;
-	//philo_debug(philo);
-	//printf("%d philo %d last meal is %d\n", now, philo->id, philo->last_meal);
 	return (0);
 }
 
@@ -92,8 +77,6 @@ int	philo_endmeal(t_philo *philo, int now)
 		return (-1);
 	if (pthread_mutex_unlock(&philo->args->forks[philo->fork_r]) != 0)
 		return (-1);
-	// pthread_mutex_unlock(&philo->args->forks[philo->fork_l]);
-	// pthread_mutex_unlock(&philo->args->forks[philo->fork_r]);
 	if (philo->status == dead)
 		return (0);
 	philo->meal_count++;
@@ -101,11 +84,10 @@ int	philo_endmeal(t_philo *philo, int now)
 	philo->sleep_start = now;
 	if (philo->meal_count >= philo->args->meal_count)
 	{
-		//philo->status = full;
+		pthread_mutex_lock(&philo->args->output);
 		philo->args->philo_full++;
-		//printf("philo_full %d\n", philo->args->philo_full);
+		pthread_mutex_unlock(&philo->args->output);
 	}
-	//printf("philo %d start sleep is %d\n", philo->id, philo->sleep_start);
 	philo_output(philo);
 	return (0);
 }
@@ -180,18 +162,9 @@ int	setup_philos(t_args *args)
 	while (i < args->philo_count)
 	{
 		philo = malloc(sizeof(t_philo));
-		
-		//rattacher philo au args
 		philo->id = i + 1;
 		philo->args = args;
 		args->philo_data[i] = philo;
-		// if (philo->id == 1)
-		// {
-		// 	printf("ptr philo %d at birth: %p\n", philo->id, philo);
-		// 	printf("ptr philo %d in args: %p\n", args->philo_data[i]->id, args->philo_data[i]);
-		// 	printf("in setup_philo\n");
-		// 	philo_debug(philo);
-		// }
 		pthread_create(&args->philos[i], NULL, philo_birth, philo);
 		usleep(100);
 		i++;

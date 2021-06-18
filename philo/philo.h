@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/18 16:35:22 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/18 19:06:25 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct timeval	t_timeval;
+//typedef struct timeval	t_timeval;
 
 typedef struct s_args	t_args;
 
@@ -52,13 +52,12 @@ typedef struct s_args
 	int				time_sleep;
 	int				meal_count;
 	int				all_alive;
-	t_timeval		start;
+	struct timeval	start;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	output;
 	pthread_t		*philos;
 	t_philo			**philo_data;
 }				t_args;
-
 
 void	argerror_exit(void);
 void	args_init(t_args *args);
@@ -67,7 +66,7 @@ char	*ft_itoa(int n);
 int		ft_atoi(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		args_check(t_args *args);
-int		get_elapsed_time(t_timeval start);
+int		get_elapsed_time(struct timeval start);
 int		setup_philos(t_args *args);
 int		philo_startmeal(t_philo *philo, int now);
 int		philo_endmeal(t_philo *philo, int now);
@@ -81,4 +80,5 @@ void	choose_forks(t_philo *philo);
 int		grab_fork(t_philo *philo, int fork);
 void	print_args(t_args *args); //debug
 void	philo_debug(t_philo *philo); //debug
+void	main_ptrdebug(t_args *args); //debug
 #endif

@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 12:52:31 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/15 18:19:06 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/18 18:40:42 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 /* returns elapsed time since start in ms */
 
-int	get_elapsed_time(t_timeval start)
+int	get_elapsed_time(struct timeval start)
 {
-	t_timeval	now;
+	struct timeval	now;
 
 	if (gettimeofday(&now, NULL) == -1)
 		return (-1);
