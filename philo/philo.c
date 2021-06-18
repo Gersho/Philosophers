@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 17:23:09 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/17 13:12:59 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/18 12:36:55 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,20 @@ int	philo_output(t_philo *philo)
 
 void	philo_isalive(t_philo *philo, int now)
 {
+	// if (now == 800 && philo->id == 1)
+	// {
+	// 	printf("");
+		
+	// }
+
 	if (now >= philo->last_meal + philo->args->time_death)
 	{
+	 	//philo_debug(philo);
+		if (philo->id == 1)
+		{
+			printf("in philo is alive death philo %d ptr: %p\n",philo->id , philo);
+			philo_debug(philo);
+		}
 		philo->status = dead;
 		philo_output(philo);
 		philo->args->all_alive = 0;
@@ -65,7 +77,8 @@ int	philo_startmeal(t_philo *philo, int now)
 	philo->status = eating;
 	philo_output(philo);
 	philo->last_meal = now;
-	//printf("philo %d last meal is %d\n", philo->id, philo->last_meal);
+	//philo_debug(philo);
+	//printf("%d philo %d last meal is %d\n", now, philo->id, philo->last_meal);
 	return (0);
 }
 
@@ -153,9 +166,16 @@ int	setup_philos(t_args *args)
 		philo = malloc(sizeof(t_philo));
 
 		//rattacher philo au args
-		args->philo_data[i] = philo;
 		philo->id = i + 1;
 		philo->args = args;
+		args->philo_data[i] = philo;
+		if (philo->id == 1)
+		{
+			printf("ptr philo %d at birth: %p\n", philo->id, philo);
+			printf("ptr philo %d in args: %p\n", args->philo_data[i]->id, args->philo_data[i]);
+			printf("in setup_philo\n");
+			philo_debug(philo);
+		}
 		pthread_create(&args->philos[i], NULL, philo_birth, philo);
 		usleep(1);
 		i++;

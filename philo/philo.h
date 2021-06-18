@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/17 13:07:42 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/18 12:27:57 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ typedef struct s_args
 	pthread_mutex_t	output;
 	pthread_t		*philos;
 	t_philo			**philo_data;
+
+
+
+	int				debug_plz;
 }				t_args;
 
 
@@ -73,6 +77,7 @@ int		mutex_init(t_args *args);
 int		mutex_destroy(t_args *args);
 int		unspawn_philos(t_args *args);
 void	philo_isalive(t_philo *philo, int now);
-// void	print_args(t_args *args); //debug
-// void	philo_debug(t_philo *philo); //debug
+
+void	print_args(t_args *args); //debug
+void	philo_debug(t_philo *philo); //debug
 #endif
