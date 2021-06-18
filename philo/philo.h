@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/18 12:27:57 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/18 16:35:22 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_philo
 typedef struct s_args
 {
 	int				philo_count;
+	int				philo_full;
 	int				time_death;
 	int				time_eat;
 	int				time_sleep;
@@ -56,10 +57,6 @@ typedef struct s_args
 	pthread_mutex_t	output;
 	pthread_t		*philos;
 	t_philo			**philo_data;
-
-
-
-	int				debug_plz;
 }				t_args;
 
 
@@ -72,12 +69,16 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		args_check(t_args *args);
 int		get_elapsed_time(t_timeval start);
 int		setup_philos(t_args *args);
+int		philo_startmeal(t_philo *philo, int now);
+int		philo_endmeal(t_philo *philo, int now);
 int		mutex_forks(t_args *args);
+int		philo_output(t_philo *philo);
 int		mutex_init(t_args *args);
 int		mutex_destroy(t_args *args);
 int		unspawn_philos(t_args *args);
 void	philo_isalive(t_philo *philo, int now);
-
+void	choose_forks(t_philo *philo);
+int		grab_fork(t_philo *philo, int fork);
 void	print_args(t_args *args); //debug
 void	philo_debug(t_philo *philo); //debug
 #endif
