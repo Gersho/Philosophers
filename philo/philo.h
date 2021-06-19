@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/18 19:06:25 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/19 12:56:56 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,4 @@ int		unspawn_philos(t_args *args);
 void	philo_isalive(t_philo *philo, int now);
 void	choose_forks(t_philo *philo);
 int		grab_fork(t_philo *philo, int fork);
-void	print_args(t_args *args); //debug
-void	philo_debug(t_philo *philo); //debug
-void	main_ptrdebug(t_args *args); //debug
 #endif

@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:05:15 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/18 18:50:18 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/19 13:31:37 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	main_monitoring(t_args *args)
 int	main(int ac, char **av)
 {
 	t_args	*args;
-	int		i;
 
 	if (ac != 5 && ac != 6)
 		return (error_ret());
@@ -72,7 +71,6 @@ int	main(int ac, char **av)
 	args_init(args);
 	if (args_parse(ac, av, args) == -1)
 		return (error_ret());
-	print_args(args);
 	args->philos = malloc(sizeof(pthread_t) * args->philo_count);
 	args->philo_data = malloc(sizeof(t_philo *) * args->philo_count);
 	args->forks = malloc(sizeof(pthread_mutex_t) * args->philo_count);
