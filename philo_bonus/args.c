@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:12:34 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/18 16:36:58 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/19 14:05:10 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	args_init(t_args *args)
 	args->meal_count = -1;
 	args->all_alive = 1;
 	args->philo_full = 0;
-	args->forks = NULL;
-	args->philos = NULL;
 }
 
 static int	obtain_value(char *arg)

@@ -1,9 +1,9 @@
-SRCS		= mutex.c philo_obj.c philo_tools.c args.c main.c parse_tools.c time.c
+SRCS		= args.c debug_philo.c main.c parse_tools.c time.c philo_tools.c
 
 
 OBJS			= $(SRCS:.c=.o)
 
-NAME			= philo
+NAME			= philo_bonus
 CC				= gcc
 RM				= rm -f
 CFLAGS			= -Wall -Wextra -Werror
@@ -16,13 +16,13 @@ all:			$(NAME)
 $(NAME):		philo_
 
 philo_:			$(OBJS) philo.h
-				$(CC) $(CFLAGS) -Iphilo.h -o philo $(OBJS)
+				$(CC) $(CFLAGS) -Iphilo.h -o philo_bonus $(OBJS)
 
 clean:			
 				$(RM) $(OBJS)
 
 fclean:			clean
-				$(RM) philo
+				$(RM) philo_bonus
 
 re:			fclean all
 

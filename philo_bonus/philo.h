@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/19 14:01:06 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/19 16:18:21 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ typedef struct s_args
 	int				meal_count;
 	int				all_alive;
 	struct timeval	start;
-	t_philo			**philo_data;
+	int				*child_pid;
+
 }				t_args;
 
 void	argerror_exit(void);
@@ -61,5 +62,8 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		args_check(t_args *args);
 int		get_elapsed_time(struct timeval start);
 
+int spawn_processes(t_args *args);
 
+void	print_args(t_args *args); //debug
+void	philo_debug(t_philo *philo); //debug
 #endif
