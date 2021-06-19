@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/19 13:49:12 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/19 14:01:06 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ typedef struct s_philo
 	int			last_meal;
 	int			sleep_start;
 	int			meal_count;
-	int			fork_l;
-	int			fork_r;
 	t_state		status;
 	t_args		*args;
 }	t_philo;
@@ -51,9 +49,6 @@ typedef struct s_args
 	int				meal_count;
 	int				all_alive;
 	struct timeval	start;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	output;
-	pthread_t		*philos;
 	t_philo			**philo_data;
 }				t_args;
 
@@ -65,15 +60,6 @@ int		ft_atoi(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		args_check(t_args *args);
 int		get_elapsed_time(struct timeval start);
-int		setup_philos(t_args *args);
-int		philo_startmeal(t_philo *philo, int now);
-int		philo_endmeal(t_philo *philo, int now);
-int		mutex_forks(t_args *args);
-int		philo_output(t_philo *philo);
-int		mutex_init(t_args *args);
-int		mutex_destroy(t_args *args);
-int		unspawn_philos(t_args *args);
-void	philo_isalive(t_philo *philo, int now);
-void	choose_forks(t_philo *philo);
-int		grab_fork(t_philo *philo, int fork);
+
+
 #endif
