@@ -6,11 +6,20 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 15:30:33 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/19 16:42:48 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/24 13:51:22 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	philo_init(t_args *args, int i)
+{
+	args->philo.id = i + 1;
+	args->philo.last_meal = 0;
+	args->philo.meal_count = 0;
+	args->philo.sleep_start = 0;
+	args->philo.status = thinking;
+}
 
 int spawn_processes(t_args *args)
 {
@@ -21,35 +30,26 @@ int spawn_processes(t_args *args)
 	while (i < args->philo_count)
 	{
 		fret = fork();
-
 		if (fret == 0)
 		{
-			// in child process
-			//free(args->child_pid);
-			printf("this is child process #%d\n", i);
+			args->is_main = 0;
+			philo_init(args, i);
 			break;
 		}
-		else
+		else if (fret > 0)
 		{
-
-			//in main process
+			args->is_main = 1;
 			args->child_pid[i] = fret;
 		}
-
+		else 
+			return (-1);
 		i++;
-
 	}
-	if (fret != 0)
-	{
-		i = 0;
-		while (i < args->philo_count)
-		{
-			printf("pid #%d : %d\n", i, args->child_pid[i]);
-			i++;
-		}
-
-	}
-	
-
 	return(0);
+}
+
+int	philo_birth(t_args *args)
+{
+	(void)args;
+	return (0);
 }
