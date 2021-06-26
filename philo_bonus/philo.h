@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/24 14:22:58 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/26 15:48:35 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,18 @@ typedef enum e_state
 
 typedef struct s_philo
 {
-	int			id;
-	int			last_meal;
-	int			sleep_start;
-	int			meal_count;
-	t_state		status;
+	int				id;
+	int				last_meal;
+	int				sleep_start;
+	int				meal_count;
+	t_state			status;
+	int				time_death;
+	int				time_eat;
+	int				time_sleep;
+	int				meal_needed;
+	sem_t			*sem_output;
+	sem_t			*sem_forks;
+	struct timeval	start;
 }	t_philo;
 
 typedef struct s_args
@@ -51,7 +58,9 @@ typedef struct s_args
 	struct timeval	start;
 	int				*child_pid;
 	int				is_main;
-	t_philo			philo;
+	pthread_t		monitoring;
+	int				philo_id;
+	t_philo			*philo;
 	sem_t			*sem_output;
 	sem_t			*sem_forks;
 }				t_args;
@@ -65,8 +74,15 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		args_check(t_args *args);
 int		get_elapsed_time(struct timeval start);
 
-int spawn_processes(t_args *args);
-int	philo_birth(t_args *args);
+int		spawn_processes(t_args *args);
+int		philo_birth(t_args *args);
+int		philo_output(t_philo *philo);
+int		philo_startmeal(t_philo *philo, int now);
+int		philo_endmeal(t_philo *philo, int now);
+int		philo_loop(t_philo *philo);
+void	philo_isalive(t_philo *philo, int now);
+void	*philo_monitor(void *data);
+void	philo_init(t_args *args, t_philo *philo);
 
 void	print_args(t_args *args); //debug
 void	philo_debug(t_philo *philo); //debug
