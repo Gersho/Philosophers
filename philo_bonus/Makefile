@@ -13,9 +13,7 @@ all:			$(NAME)
 %.o: 			%.c	philo.h
 				$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME):		philo_
-
-philo_:			$(OBJS) philo.h
+$(NAME):		$(OBJS) philo.h
 				$(CC) $(CFLAGS) -Iphilo.h -o philo_bonus $(OBJS)
 
 clean:			
@@ -26,4 +24,4 @@ fclean:			clean
 
 re:			fclean all
 
-.PHONY:		re fclean clean all philo_
+.PHONY:		re fclean clean all

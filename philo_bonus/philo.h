@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 13:02:53 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/28 11:59:58 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/28 13:12:00 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,6 @@ int		philo_loop(t_philo *philo);
 void	philo_isalive(t_philo *philo, int now);
 void	*philo_monitor(void *data);
 void	philo_init(t_args *args, t_philo *philo);
+int		shutdown(t_args *args, int exit_code);
+int		error_ret(void);
 #endif
