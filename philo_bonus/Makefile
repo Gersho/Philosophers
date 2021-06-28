@@ -1,4 +1,4 @@
-SRCS		= args.c debug_philo.c main.c parse_tools.c time.c philo_tools.c
+SRCS		= args.c main.c parse_tools.c time.c philo_tools.c philo_actions.c shutdown.c
 
 
 OBJS			= $(SRCS:.c=.o)
