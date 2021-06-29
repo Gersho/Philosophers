@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 15:30:33 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/27 16:38:20 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/29 17:02:49 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	spawn_processes(t_args *args)
 		else
 			return (-1);
 		i++;
+		usleep(100);
 	}
 	return (0);
 }
@@ -70,14 +71,19 @@ void	philo_init(t_args *args, t_philo *philo)
 int	philo_birth(t_args *args)
 {
 	t_philo	*philo;
+	int		ret;
 
 	philo = malloc(sizeof(t_philo));
 	philo_init(args, philo);
 	pthread_create(&args->monitoring, NULL, philo_monitor, philo);
 	while (1)
 	{
-		philo_loop(philo);
-		usleep(1);
+		ret = philo_loop(philo);
+		if (ret == -1)
+			exit(-1);
+		if (ret == 1)
+			exit(1);
+		usleep(50);
 	}
 	exit(0);
 }

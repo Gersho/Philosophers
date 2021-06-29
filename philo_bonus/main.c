@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:05:15 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/28 12:10:39 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/29 17:02:02 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	main_checkexit(t_args *args, int i)
 	int	status;
 	int	exret;
 
+	waitpid(args->child_pid[i], &status, 0);
 	if (waitpid(args->child_pid[i], &status, 0) != -1)
 	{
 		if (WIFEXITED(status))
@@ -52,7 +53,7 @@ void	main_monitoring(t_args *args)
 				main_checkexit(args, i);
 			i++;
 		}
-		usleep(1);
+		usleep(30);
 	}
 }
 

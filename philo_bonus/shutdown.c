@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 12:09:42 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/28 12:10:47 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/29 17:02:35 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	shutdown(t_args *args, int exit_code)
 	{
 		sem_close(args->sem_forks);
 		sem_close(args->sem_output);
-		sem_unlink("/philo_output");
 		sem_unlink("/philo_forks");
+		sem_unlink("/philo_output");
 		i = 0;
 		while (i < args->philo_count)
 		{

@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 16:27:56 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/27 16:32:52 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/29 15:11:19 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	philo_output(t_philo *philo)
 	else if (philo->status == thinking)
 		printf("is thinking\n");
 	else if (philo->status == dead)
+	{
 		printf("died\n");
+		return (0);
+	}
 	else if (philo->status == taking_fork)
 		printf("has taken a fork\n");
 	sem_post(philo->sem_output);
@@ -42,7 +45,8 @@ int	philo_startmeal(t_philo *philo, int now)
 	philo_isalive(philo, now);
 	if (philo->status == dead)
 		philo_endmeal(philo, now);
-	philo->status = eating;
+	else
+		philo->status = eating;
 	philo_output(philo);
 	philo->last_meal = now;
 	return (0);
@@ -76,7 +80,7 @@ void	*philo_monitor(void *data)
 	{
 		now = get_elapsed_time(philo->start);
 		philo_isalive(philo, now);
-		usleep(1);
+		usleep(50);
 	}
 	return (NULL);
 }
@@ -88,6 +92,8 @@ int	philo_loop(t_philo *philo)
 	now = get_elapsed_time(philo->start);
 	if (now == -1)
 		return (-1);
+	if (philo->status == dead)
+		return (1);
 	if (philo->status == eating)
 	{
 		if (now >= philo->last_meal + philo->time_eat)
