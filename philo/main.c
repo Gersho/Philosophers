@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:05:15 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/19 14:19:40 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/29 14:01:38 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,34 @@ static int	error_ret(void)
 	return (-1);
 }
 
-int	shutdown(t_args *args)
+int	unspawn_philos(t_args *args)
+{
+	int	i;
+
+	i = 0;
+	while (i < args->philo_count)
+	{
+		if (pthread_detach(args->philos[i]) != 0)
+			return (-1);
+		free(args->philo_data[i]);
+		i++;
+	}
+	return (0);
+}
+
+static int	shutdown(t_args *args, int ret)
 {
 	mutex_destroy(args);
 	unspawn_philos(args);
-	free(args->philos);
-	free(args->forks);
-	free(args);
-	free(args->philo_data);
-	return (0);
+	if (args->philos)
+		free(args->philos);
+	if (args->forks)
+		free(args->forks);
+	if (args)
+		free(args);
+	if (args->philo_data)
+		free(args->philo_data);
+	return (ret);
 }
 
 int	main_monitoring(t_args *args)
@@ -53,7 +72,7 @@ int	main_monitoring(t_args *args)
 			philo_isalive(args->philo_data[i], now);
 			i++;
 		}
-		usleep(1);
+		usleep(50);
 	}
 	return (0);
 }
@@ -75,11 +94,13 @@ int	main(int ac, char **av)
 	args->forks = malloc(sizeof(pthread_mutex_t) * args->philo_count);
 	if (!args->philos || !args->forks || !args->philo_data)
 		return (-1);
+	if (mutex_init(args) == -1)
+		shutdown(args, -1);
 	gettimeofday(&args->start, NULL);
-	mutex_init(args);
-	setup_philos(args);
+	if (setup_philos(args) == -1)
+		shutdown(args, -1);
 	if (main_monitoring(args) == -1)
-		return (-1);
-	shutdown(args);
+		shutdown(args, -1);
+	shutdown(args, 0);
 	return (0);
 }

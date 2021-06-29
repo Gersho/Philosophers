@@ -6,7 +6,7 @@
 /*   By: kzennoun <kzennoun@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 19:43:26 by kzennoun          #+#    #+#             */
-/*   Updated: 2021/06/19 12:55:33 by kzennoun         ###   ########lyon.fr   */
+/*   Updated: 2021/06/28 15:14:04 by kzennoun         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,14 @@ int	philo_startmeal(t_philo *philo, int now)
 	if (grab_fork(philo, philo->fork_r) == -1)
 		return (-1);
 	now = get_elapsed_time(philo->args->start);
+	if (now == -1)
+		return (-1);
 	philo_isalive(philo, now);
 	if (philo->status == dead)
 		philo_endmeal(philo, now);
 	philo->status = eating;
-	philo_output(philo);
+	if (philo_output(philo) == -1)
+		return (-1);
 	philo->last_meal = now;
 	return (0);
 }
